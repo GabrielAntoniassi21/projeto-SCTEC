@@ -16,7 +16,7 @@
 const candiadto = {
     nome: "João Silva",
     area: "Front-End",
-    habilidades: ["JavaScroipt", "GitHub", "Logica de Programação", "KanBan"],
+    habilidades: ["JavaScript", "GitHub", "ógica de Programação", "KanBan"],
     experienciaMeses: 3
 }
 

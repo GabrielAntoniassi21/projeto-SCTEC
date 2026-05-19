@@ -1,4 +1,4 @@
-class candidato {
+class Candidato {
     constructor(nome, area, habilidades, experienciaMeses) {
         this.nome = nome;
         this.area = area;
@@ -24,7 +24,7 @@ class VagaFrontEndJunior extends Vaga {
     }
 }
 
-const candidato1 = new candidato("João Silva", "Front-End", ["JavaScript", "GitHub", "Logica de Programação", "KanBan"], 3);
+const candidato1 = new Candidato("João Silva", "Front-End", ["JavaScript", "GitHub", "Lógica de Programação", "Kanban"], 3);
 
 const vagas = [
     new VagaFrontEndJunior(
@@ -58,29 +58,87 @@ const vagas = [
 function calcularMatch(candidato, vaga) {
     const habilidadesCandidato = new Set(candidato.habilidades);
     const requisitosVaga = vaga.requisitos;
+
     let matches = 0;
+    let faltantes = [];
 
     for (const requisito of requisitosVaga) {
+
         if (habilidadesCandidato.has(requisito)) {
             matches++;
+        } else {
+            faltantes.push(requisito);
         }
     }
 
-    return (matches / requisitosVaga.length) * 100;
+    const percentual = (matches / requisitosVaga.length) * 100;
+
+    let classificacao;
+
+    if (percentual >= 80) {
+        classificacao = "Alta";
+    } else if (percentual >= 50) {
+        classificacao = "Média";
+    } else {
+        classificacao = "Baixa";
+    }
+
+    return {
+        percentual: percentual,
+        matches: matches,
+        faltantes: faltantes,
+        classificacao: classificacao
+    };
 }
 
 function MelhoresVagas(candidato, vagas) {
+
     const vagasComMatch = vagas.map(vaga => {
+
+        const resultado = calcularMatch(candidato, vaga);
+
         return {
-            vaga: vaga,
-            match: calcularMatch(candidato, vaga)
+            empresa: vaga.empresa,
+            cargo: vaga.cargo,
+            modalidade: vaga.modalidade,
+            percentual: resultado.percentual,
+            classificacao: resultado.classificacao,
+            faltantes: resultado.faltantes
         };
     });
-    return vagasComMatch.sort((a, b) => b.match - a.match);
+
+    return vagasComMatch.sort((a, b) => b.percentual - a.percentual);
 }
+const recomendacoesEstudo = {
+    "JavaScript": "Praticar funções, arrays e objetos.",
+    "GitHub": "Aprender versionamento, commits e branches.",
+    "Kanban": "Estudar metodologias ágeis e organização de tarefas.",
+    "Lógica de Programação": "Resolver exercícios de lógica e algoritmos.",
+    "Arrays": "Praticar métodos como map, filter e reduce.",
+    "Objetos": "Treinar criação e manipulação de objetos em JavaScript.",
+    "Funções": "Estudar funções normais, arrow functions e callbacks."
+};
 
 const vagasOrdenadas = MelhoresVagas(candidato1, vagas);
-console.log("Vagas ordenadas por match:");
-vagasOrdenadas.forEach(v => {
-    console.log(`Empresa: ${v.vaga.empresa}, Cargo: ${v.vaga.cargo}, Match: ${v.match.toFixed(2)}%`);
+
+    console.log("===== Vagas Compatíveis =====");
+
+    vagasOrdenadas.forEach((vaga, index) => {
+
+       console.log(`
+        ${index + 1}° Lugar - ${vaga.empresa}
+        Cargo: ${vaga.cargo}
+        Modalidade: ${vaga.modalidade}
+        Compatibilidade: ${vaga.percentual.toFixed(2)}%
+        Classificação: ${vaga.classificacao}
+        Habilidades faltantes: ${
+            vaga.faltantes.length > 0
+                ? vaga.faltantes.join(", ")
+                : "Nenhuma"
+            }
+        Recomendação de estudos: ${vaga.faltantes.length > 0
+                ? vaga.faltantes.map(habilidade => recomendacoesEstudo[habilidade]).join("\n        ")
+                : "Nenhuma"
+            }
+    `);
 });
