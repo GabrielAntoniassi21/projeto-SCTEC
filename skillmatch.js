@@ -57,4 +57,3 @@ vagas = [
         modalidade: "Presencial"}
 
 ];
-
