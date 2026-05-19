@@ -9,3 +9,7 @@ principais partes de codigo utilizados durante o projeto:
 - Uso de this: demonstrando o uso de this para acessar as propriedades dos objetos dentro das classes.
 - Uso de closures: criando funções que mantêm um estado interno, como um contador de análises de compatibilidade.
 - Promises e async/await: simulando a busca de vagas com um delay e utilizando async/await para obter as vagas antes de calcular a compatibilidade.
+
+Durante o codigo eel vai receber o perfil do candidato, criar as vagas, calcular a compatibilidade, classificar a compatibilidade, listar habilidades faltantes, encontrar a vaga com maior compatibilidade e gerar uma recomendação de estudos para o candidato melhorar sua compatibilidade.
+
+Como saida será gerada um relatório para cada vaga, mostrando o percentual de compatibilidade, as habilidades faltantes e a classificação da compatibilidade (alta, média ou baixa). Além disso, será gerada uma recomendação de estudos com base nas habilidades faltantes para ajudar o candidato a melhorar sua compatibilidade com as vagas.
