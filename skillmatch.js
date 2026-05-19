@@ -24,36 +24,63 @@ class VagaFrontEndJunior extends Vaga {
     }
 }
 
-const candidato = {
-    nome: "João Silva",
-    area: "Front-End",
-    habilidades: ["JavaScroipt", "GitHub", "Logica de Programação", "KanBan"],
-    experienciaMeses: 3
-};
+const candidato1 = new candidato("João Silva", "Front-End", ["JavaScript", "GitHub", "Logica de Programação", "KanBan"], 3);
 
-vagas = [
-    {
-        id: 1,
-        empresa: "Tech Start",
-        cargo: "Desenvolvedor Front-End Junior",
-        requisitos: ["JavaScript", "GitHub", "Logica de Programação"],
-        salario: 2800,
-        modalidade: "Remoto"
-    },
-    {
-        id: 2,
-        empresa: "CodeLab",
-        cargo: "Estagiário Front-End",
-        requisitos: ["JavaScript", "Kanban", "GitHub"],
-        salario: 1800,
-        modalidade: "Hibrido"
-    },
-    {
-        id: 3,
-        empresa: "WebSolutions",
-        cargo: "Programador JavaScript Junior",
-        requisitos: ["JavaScript", "Arrays", "Objetos", "Funções"],
-        salario: 3000,
-        modalidade: "Presencial"}
+const vagas = [
+    new VagaFrontEndJunior(
+        1,
+        "Tech Start",
+        "Desenvolvedor Front-End Junior",
+        ["JavaScript", "GitHub", "Lógica de Programação"],
+        2800,
+        "Remoto"
+    ),
 
+    new VagaFrontEndJunior(
+        2,
+        "CodeLab",
+        "Estagiário Front-End",
+        ["JavaScript", "Kanban", "GitHub"],
+        1800,
+        "Híbrido"
+    ),
+
+    new VagaFrontEndJunior(
+        3,
+        "WebSolutions",
+        "Programador JavaScript Junior",
+        ["JavaScript", "Arrays", "Objetos", "Funções"],
+        3000,
+        "Presencial"
+    )
 ];
+
+function calcularMatch(candidato, vaga) {
+    const habilidadesCandidato = new Set(candidato.habilidades);
+    const requisitosVaga = vaga.requisitos;
+    let matches = 0;
+
+    for (const requisito of requisitosVaga) {
+        if (habilidadesCandidato.has(requisito)) {
+            matches++;
+        }
+    }
+
+    return (matches / requisitosVaga.length) * 100;
+}
+
+function MelhoresVagas(candidato, vagas) {
+    const vagasComMatch = vagas.map(vaga => {
+        return {
+            vaga: vaga,
+            match: calcularMatch(candidato, vaga)
+        };
+    });
+    return vagasComMatch.sort((a, b) => b.match - a.match);
+}
+
+const vagasOrdenadas = MelhoresVagas(candidato1, vagas);
+console.log("Vagas ordenadas por match:");
+vagasOrdenadas.forEach(v => {
+    console.log(`Empresa: ${v.vaga.empresa}, Cargo: ${v.vaga.cargo}, Match: ${v.match.toFixed(2)}%`);
+});
