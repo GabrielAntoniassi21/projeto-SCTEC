@@ -24,7 +24,12 @@ class VagaFrontEndJunior extends Vaga {
     }
 }
 
-const candidato1 = new Candidato("João Silva", "Front-End", ["JavaScript", "GitHub", "Lógica de Programação", "Kanban"], 3);
+const candidato1 = new Candidato(
+    "João Silva",
+    "Front-End",
+    ["JavaScript", "GitHub", "Lógica de Programação", "Kanban"],
+    3
+);
 
 const vagas = [
     new VagaFrontEndJunior(
@@ -55,7 +60,7 @@ const vagas = [
     )
 ];
 
-function calcularMatch(candidato, vaga) {
+function calcularMatch(candidato, vaga, callback) {
     const habilidadesCandidato = new Set(candidato.habilidades);
     const requisitosVaga = vaga.requisitos;
 
@@ -63,7 +68,6 @@ function calcularMatch(candidato, vaga) {
     let faltantes = [];
 
     for (const requisito of requisitosVaga) {
-
         if (habilidadesCandidato.has(requisito)) {
             matches++;
         } else {
@@ -83,18 +87,22 @@ function calcularMatch(candidato, vaga) {
         classificacao = "Baixa";
     }
 
-    return {
-        percentual: percentual,
-        matches: matches,
-        faltantes: faltantes,
-        classificacao: classificacao
+    const resultado = {
+        percentual,
+        matches,
+        faltantes,
+        classificacao
     };
+
+    if (callback) {
+        callback(resultado);
+    }
+
+    return resultado;
 }
 
 function MelhoresVagas(candidato, vagas) {
-
     const vagasComMatch = vagas.map(vaga => {
-
         const resultado = calcularMatch(candidato, vaga);
 
         return {
@@ -109,6 +117,7 @@ function MelhoresVagas(candidato, vagas) {
 
     return vagasComMatch.sort((a, b) => b.percentual - a.percentual);
 }
+
 const recomendacoesEstudo = {
     "JavaScript": "Praticar funções, arrays e objetos.",
     "GitHub": "Aprender versionamento, commits e branches.",
@@ -119,26 +128,72 @@ const recomendacoesEstudo = {
     "Funções": "Estudar funções normais, arrow functions e callbacks."
 };
 
-const vagasOrdenadas = MelhoresVagas(candidato1, vagas);
+// CLOSURE
+function criarContadorAnalises() {
+    let contador = 0;
+
+    return function () {
+        contador++;
+        return `Análise #${contador} realizada`;
+    };
+}
+
+const contadorAnalises = criarContadorAnalises();
+
+// PROMISE
+function buscarVagas() {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(vagas);
+        }, 2000);
+    });
+}
+
+// ASYNC / AWAIT
+async function iniciarSistema() {
+    console.log("Buscando vagas...");
+
+    const vagasDisponiveis = await buscarVagas();
+
+    console.log("Vagas carregadas com sucesso!");
+
+    const vagasOrdenadas = MelhoresVagas(candidato1, vagasDisponiveis);
 
     console.log("===== Vagas Compatíveis =====");
 
     vagasOrdenadas.forEach((vaga, index) => {
+        console.log(contadorAnalises());
 
-       console.log(`
-        ${index + 1}° Lugar - ${vaga.empresa}
-        Cargo: ${vaga.cargo}
-        Modalidade: ${vaga.modalidade}
-        Compatibilidade: ${vaga.percentual.toFixed(2)}%
-        Classificação: ${vaga.classificacao}
-        Habilidades faltantes: ${
-            vaga.faltantes.length > 0
-                ? vaga.faltantes.join(", ")
-                : "Nenhuma"
-            }
-        Recomendação de estudos: ${vaga.faltantes.length > 0
-                ? vaga.faltantes.map(habilidade => recomendacoesEstudo[habilidade]).join("\n        ")
-                : "Nenhuma"
-            }
-    `);
+        console.log(`
+${index + 1}° Lugar - ${vaga.empresa}
+Cargo: ${vaga.cargo}
+Modalidade: ${vaga.modalidade}
+Compatibilidade: ${vaga.percentual.toFixed(2)}%
+Classificação: ${vaga.classificacao}
+Habilidades faltantes: ${
+    vaga.faltantes.length > 0
+        ? vaga.faltantes.join(", ")
+        : "Nenhuma"
+}
+Recomendação de estudos: ${
+    vaga.faltantes.length > 0
+        ? vaga.faltantes
+            .map(habilidade =>
+                recomendacoesEstudo[habilidade] || "Sem recomendação disponível."
+            )
+            .join("\n")
+        : "Nenhuma"
+}
+`);
+    });
+}
+
+// CALLBACK
+calcularMatch(candidato1, vagas[0], (resultado) => {
+    console.log("===== Callback executado =====");
+    console.log(`Compatibilidade: ${resultado.percentual.toFixed(2)}%`);
+    console.log(`Classificação: ${resultado.classificacao}`);
 });
+
+iniciarSistema();
+
