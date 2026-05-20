@@ -1,15 +1,72 @@
-O objetivo principal com esse projeto seria não só realizar um códiigo que buscasse a melhor opção para vaga, mas sim testar as capacidades dos alunos, com relação a cumprir prazos, realizar tarefas, explicar processos, e testar conhecimentos.
+# Objetivo do Projeto
 
-o projeto em si teria como objetivo realizar um codigo simples que comparasse os objetos das vagas com os objetos do candidadto e criar uma porcentagem de qual vaga possui a maior compatibilidade com o candidato e quais habilidades ele precisaria melhor apra conseguir uma vaga com habilidades faltantes.
+O principal objetivo deste projeto não foi apenas desenvolver um código que encontrasse a melhor vaga para um candidato, mas também testar as capacidades dos alunos em diferentes aspectos, como:
 
-principais partes de codigo utilizados durante o projeto: 
-- Funções de comparação: utilizando funções para comparar as habilidades do candidato com os requisitos das vagas, calculando a compatibilidade e listando as habilidades faltantes.
-- Manipulação de arrays: utilizando métodos como map, filter e reduce para processar as listas de habilidades e vagas.
-- Criação de objetos: utilizando classes para criar objetos de candidato e vagas, demonstrando o uso de herança para especializar as vagas de front-end junior.
-- Uso de this: demonstrando o uso de this para acessar as propriedades dos objetos dentro das classes.
-- Uso de closures: criando funções que mantêm um estado interno, como um contador de análises de compatibilidade.
-- Promises e async/await: simulando a busca de vagas com um delay e utilizando async/await para obter as vagas antes de calcular a compatibilidade.
+- Cumprimento de prazos;
+- Organização e realização de tarefas;
+- Explicação dos processos do código;
+- Aplicação dos conhecimentos adquiridos durante a disciplina.
 
-Durante o codigo eel vai receber o perfil do candidato, criar as vagas, calcular a compatibilidade, classificar a compatibilidade, listar habilidades faltantes, encontrar a vaga com maior compatibilidade e gerar uma recomendação de estudos para o candidato melhorar sua compatibilidade.
+O projeto tem como foco a criação de um sistema simples capaz de comparar as habilidades de um candidato com os requisitos de diferentes vagas, gerando uma porcentagem de compatibilidade para identificar quais oportunidades melhor se encaixam no perfil do candidato.
 
-Como saida será gerada um relatório para cada vaga, mostrando o percentual de compatibilidade, as habilidades faltantes e a classificação da compatibilidade (alta, média ou baixa). Além disso, será gerada uma recomendação de estudos com base nas habilidades faltantes para ajudar o candidato a melhorar sua compatibilidade com as vagas.
+Além disso, o sistema também apresenta as habilidades faltantes, permitindo identificar quais conhecimentos poderiam ser desenvolvidos para aumentar a compatibilidade com determinadas vagas.
+
+## Funcionamento do Projeto
+
+O sistema recebe os dados de um candidato, cria diferentes vagas de emprego e realiza uma análise comparativa entre as habilidades do candidato e os requisitos de cada vaga.
+
+Durante a execução, o programa realiza as seguintes etapas:
+
+1. Recebe os dados do candidato;
+2. Cria as vagas disponíveis;
+3. Calcula a porcentagem de compatibilidade;
+4. Classifica o nível de compatibilidade;
+5. Exibe as habilidades encontradas e faltantes;
+6. Identifica a vaga com maior compatibilidade;
+7. Apresenta um resumo das informações obtidas.
+
+## Principais Conceitos Utilizados
+
+### Classes e Objetos
+Foram utilizadas classes para representar candidatos e vagas, permitindo uma estrutura mais organizada e orientada a objetos.
+
+Também foi aplicada **herança**, permitindo que a classe `VagaFrontEndJunior` herdasse características da classe `Vaga`.
+
+### Uso de `this`
+O `this` foi utilizado dentro das classes para acessar propriedades e métodos do próprio objeto, permitindo maior reutilização e organização do código.
+
+### Métodos de Array
+Durante o projeto, foram utilizados diferentes métodos de array para processar os dados:
+
+- `filter()` → utilizado para encontrar habilidades em comum e habilidades faltantes;
+- `every()` → utilizado para verificar se o candidato possui todos os requisitos da vaga;
+- `reduce()` → utilizado para encontrar a vaga com maior compatibilidade;
+- `forEach()` → utilizado para percorrer e apresentar as informações das vagas.
+
+### Closure
+Foi utilizada uma **closure** para criar um contador privado, responsável por numerar automaticamente as análises das vagas sem alterar variáveis globais.
+
+### Promise e `async/await`
+Foi utilizada uma **Promise** junto com `async/await` para simular um tempo de organização das vagas antes da exibição dos resultados, representando um comportamento semelhante a processos assíncronos encontrados em aplicações reais.
+
+## Saída do Sistema
+
+Ao executar o código, o sistema gera um relatório no console contendo:
+
+- Nome do candidato;
+- Compatibilidade com cada vaga;
+- Habilidades encontradas;
+- Habilidades faltantes;
+- Salário da vaga;
+- Modalidade de trabalho;
+- Empresa responsável;
+- Classificação da compatibilidade (alta, média ou baixa);
+- Melhor vaga encontrada com base na compatibilidade.
+
+## Considerações Finais
+
+Este projeto teve como objetivo praticar conceitos fundamentais do JavaScript, incluindo **Programação Orientada a Objetos (POO)**, manipulação de arrays, closures, programação assíncrona e organização de código, além de demonstrar a lógica de comparação entre perfis profissionais e requisitos de vagas.
+
+**Link do Trello**
+https://trello.com/b/52z399iW/projeto
+
