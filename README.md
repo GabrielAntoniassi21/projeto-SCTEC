@@ -70,3 +70,5 @@ Este projeto teve como objetivo praticar conceitos fundamentais do JavaScript, i
 **Link do Trello**
 https://trello.com/b/52z399iW/projeto
 
+**Link do GitHub**
+https://github.com/GabrielAntoniassi21/projeto-SCTEC.git
